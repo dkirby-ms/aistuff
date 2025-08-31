@@ -26,7 +26,8 @@ bash ./llm-d-infra/quickstart/gateway-control-plane-providers/install-gateway-pr
 helmfile apply -f ./llm-d-infra/quickstart/gateway-control-plane-providers/kgateway.helmfile.yaml
 
 # Install LLM-D for inference scheduling
-sed -i '/^decode:/,/^[a-zA-Z]/ s/  replicas: 2/  replicas: 1/' /home/saitcho/aistuff/llm-d-infra/quickstart/examples/inference-scheduling/ms-inference-scheduling/values.yaml # hack for only one GPU
+sed -i '/^decode:/,/^[a-zA-Z]/ s/  replicas: 2/  replicas: 1/' ./llm-d-infra/quickstart/examples/inference-scheduling/ms-inference-scheduling/values.yaml # hack for only one GPU
+sed -i '/- '\''{"kv_connector":"NixlConnector", "kv_role":"kv_both"}'\''$/a\      - "--gpu-memory-utilization"\n      - "0.85"' ./llm-d-infra/quickstart/examples/inference-scheduling/ms-inference-scheduling/values.yaml
 cd ./llm-d-infra/quickstart/examples/inference-scheduling
 helmfile apply -e kgateway -n ${NAMESPACE}
 kubectl apply -f httproute.yaml
