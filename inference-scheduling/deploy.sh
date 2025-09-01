@@ -6,3 +6,4 @@ kubectl apply -f httproute.yaml
 
 # Forward the port to Windows host
 minikube service infra-inference-scheduling-inference-gateway --url -n llmd
+
