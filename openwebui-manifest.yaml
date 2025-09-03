@@ -32,6 +32,16 @@ spec:
           value: "http://infra-inference-scheduling-inference-gateway.llmd.svc.cluster.local/v1"
         - name: OPENAI_API_KEY
           value: "not-needed"
+        # Customization Environment Variables
+        - name: WEBUI_NAME
+          value: "BasilChat"
+        - name: RESPONSE_WATERMARK
+          value: "Powered by cookies"
+        - name: WEBUI_URL
+          value: "http://localhost"
+        # Add custom favicon URL if desired
+        # - name: WEBUI_FAVICON_URL
+        #   value: "https://your-domain.com/favicon.png"
         resources:
           requests:
             memory: "512Mi"

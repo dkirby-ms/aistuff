@@ -156,6 +156,23 @@ install_gateway_providers() {
     log_info "Gateway provider CRDs installed successfully"
 }
 
+deploy_inference_scheduling() {
+    log_info "Deploying inference scheduling..."
+    cd ./inference-scheduling
+
+    if ! helmfile apply -e kgateway -n "${NAMESPACE}"; then
+        log_error "Failed to apply helmfile for inference scheduling"
+        exit 1
+    fi
+    
+    if ! kubectl apply -f httproute.yaml; then
+        log_error "Failed to apply httproute.yaml"
+        exit 1
+    fi
+    
+    log_info "Inference scheduling deployed successfully"
+}
+
 # Main execution function
 main() {
     log_info "Starting LLM-D setup..."
@@ -165,7 +182,8 @@ main() {
     install_dependencies
     setup_kubernetes_resources
     install_gateway_providers
-    
+    deploy_inference_scheduling
+
     log_info "LLM-D setup completed successfully!"
     log_info "Namespace: ${NAMESPACE}"
     log_info "HF Token Secret: ${HF_TOKEN_NAME}"

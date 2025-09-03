@@ -20,9 +20,15 @@ This setup is tested with WSL2 and Ubuntu 24.04 with an Nvidia RTX 5070 consumer
     ./setup_observability.sh
     ```
 
-1. Setup llmd infra
+1. Setup llmd and inference scheduling example
 
     ```shell
     chmod +x setup_llmd.sh
     ./setup_llmd.sh
+    ```
+
+1. Forward ports to access services.
+
+    ```shell
+
     ```

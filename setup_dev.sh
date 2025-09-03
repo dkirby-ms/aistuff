@@ -42,8 +42,8 @@ detect_resources() {
     local total_memory_gb=$(($(grep MemTotal /proc/meminfo | awk '{print $2}') / 1024 / 1024))
     local total_cpus=$(nproc)
     
-    # Use 75% of available memory, minimum 4GB, maximum 16GB
-    MINIKUBE_MEMORY=$((total_memory_gb * 3 / 4))
+    # Use 80% of available memory, minimum 4GB, maximum 16GB
+    MINIKUBE_MEMORY=$((total_memory_gb * 4 / 5))
     if [ $MINIKUBE_MEMORY -lt 4 ]; then
         MINIKUBE_MEMORY=4
     elif [ $MINIKUBE_MEMORY -gt 16 ]; then
