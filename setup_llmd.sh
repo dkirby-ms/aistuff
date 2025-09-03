@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Start Minikube with Docker driver and GPU support
-minikube start --driver=docker --container-runtime=docker --gpus=all --memory=12g --cpus=8
-
 # Install dependencies for LLM-D
 curl -s https://raw.githubusercontent.com/llm-d-incubation/llm-d-infra/refs/heads/main/quickstart/dependencies/install-deps.sh | bash 
 

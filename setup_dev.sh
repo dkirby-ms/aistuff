@@ -24,3 +24,5 @@ sudo apt-get install -y nvidia-container-toolkit
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 
+# Start Minikube with Docker driver and GPU support
+minikube start --driver=docker --container-runtime=docker --gpus=all --memory=12g --cpus=8
