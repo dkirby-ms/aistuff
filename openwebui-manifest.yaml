@@ -29,7 +29,7 @@ spec:
         - name: ENABLE_OPENAI_API
           value: "True"
         - name: OPENAI_API_BASE_URL
-          value: "http://infra-inference-scheduling-inference-gateway.llmd.svc.cluster.local"
+          value: "http://infra-inference-scheduling-inference-gateway.llmd.svc.cluster.local/v1"
         - name: OPENAI_API_KEY
           value: "not-needed"
         resources:
