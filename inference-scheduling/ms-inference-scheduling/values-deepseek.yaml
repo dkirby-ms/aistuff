@@ -1,0 +1,93 @@
+multinode: false
+
+modelArtifacts:
+  uri: "hf://deepseek-ai/deepseek-coder-6.7b-instruct"
+  name: "deepseek-ai/deepseek-coder-6.7b-instruct"
+  size: 30Gi  # Smaller model, less storage needed
+  authSecretName: "llm-d-hf-token"
+
+routing:
+  modelName: deepseek-ai/deepseek-coder-6.7b-instruct
+  servicePort: 8000
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      # name: infra-inference-scheduling-inference-gateway # set in helmfile
+
+  proxy:
+    image: ghcr.io/llm-d/llm-d-routing-sidecar:v0.2.0
+    connector: nixlv2
+    secure: false
+
+  inferenceModel:
+    create: false
+
+  inferencePool:
+    create: false
+    # name: gaie-inference-scheduling # set in helmfile
+
+  httpRoute:
+    create: false
+
+  epp:
+    create: false
+
+decode:
+  create: true
+  replicas: 1
+  monitoring:
+    podmonitor:
+      enabled: false
+      portName: "metrics"
+      path: "/metrics"
+      interval: "30s"
+  containers:
+  - name: "vllm"
+    image: "ghcr.io/llm-d/llm-d:v0.2.0"
+    modelCommand: vllmServe
+    args:
+      - "--enforce-eager"
+      - "--kv-transfer-config"
+      - '{"kv_connector":"NixlConnector", "kv_role":"kv_both"}'
+      - "--gpu-memory-utilization"
+      - "0.90"  # Higher utilization for smaller model
+      - "--max-model-len"
+      - "16384"  # Larger context since model is smaller
+    env:
+      - name: CUDA_VISIBLE_DEVICES
+        value: "0"
+      - name: UCX_TLS
+        value: "cuda_ipc,cuda_copy,tcp"
+      - name: VLLM_NIXL_SIDE_CHANNEL_HOST
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+      - name: VLLM_NIXL_SIDE_CHANNEL_PORT
+        value: "5557"
+      - name: VLLM_LOGGING_LEVEL
+        value: DEBUG
+    ports:
+      - containerPort: 5557
+        protocol: TCP
+      - containerPort: 8200
+        name: metrics
+        protocol: TCP
+    resources:
+      limits:
+        nvidia.com/gpu: "1"
+      requests:
+        nvidia.com/gpu: "1"
+    mountModelVolume: true
+    volumeMounts:
+    - name: metrics-volume
+      mountPath: /.config
+    - name: torch-compile-cache
+      mountPath: /.cache
+  volumes:
+  - name: metrics-volume
+    emptyDir: {}
+  - name: torch-compile-cache
+    emptyDir: {}
+
+prefill:
+  create: false

@@ -176,5 +176,8 @@ else
     print_warning "No GPU nodes detected. DCGM exporter may not be necessary."
 fi
 
+# Label the ServiceMonitor for Prometheus scraping
+kubectl label servicemonitor dcgm-exporter -n monitoring release=prometheus-stack
+
 print_status "Setup completed successfully!"
 print_status "Save the Grafana password: ${GRAFANA_ADMIN_PASSWORD}"

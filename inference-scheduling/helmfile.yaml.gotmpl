@@ -66,11 +66,7 @@ releases:
       - {{ printf "infra-%s" $rn | quote }}
       - {{ printf "gaie-%s" $rn | quote }}
     values:
-    {{- if eq .Environment.Name "gke_tpu" }}
-      - ms-inference-scheduling/values_tpu.yaml
-    {{- else }}
-      - ms-inference-scheduling/values.yaml
-    {{- end }}
+      - ms-inference-scheduling/values-phi35.yaml
     set:
     # apply release name derived values
       - name: "routing.inferencePool.name"

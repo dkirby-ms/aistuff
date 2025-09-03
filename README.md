@@ -27,8 +27,12 @@ This setup is tested with WSL2 and Ubuntu 24.04 with an Nvidia RTX 5070 consumer
     ./setup_llmd.sh
     ```
 
-1. Forward ports to access services.
+1. Forward ports to access services. This will require leaving the shell open while the port is forwarded to the Windows host.
 
     ```shell
+    minikube service prometheus-stack-grafana -n monitoring --url
+    ```
 
+    ```shell
+    minikube service openwebui -n openwebui --url
     ```

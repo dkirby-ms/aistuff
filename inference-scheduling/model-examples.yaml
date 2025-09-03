@@ -1,0 +1,30 @@
+# Example alternative models you can use:
+
+# Small models (1-2 GB VRAM):
+# modelArtifacts:
+#   uri: "hf://microsoft/DialoGPT-medium"
+#   name: "microsoft/DialoGPT-medium" 
+#   size: 10Gi
+
+# Medium models (4-8 GB VRAM):
+# modelArtifacts:
+#   uri: "hf://meta-llama/Llama-3.1-8B"
+#   name: "meta-llama/Llama-3.1-8B"
+#   size: 40Gi
+
+# Large models (16+ GB VRAM):
+# modelArtifacts:
+#   uri: "hf://meta-llama/Llama-3.1-70B"
+#   name: "meta-llama/Llama-3.1-70B"
+#   size: 160Gi
+
+# Code models:
+# modelArtifacts:
+#   uri: "hf://microsoft/CodeT5-base"
+#   name: "microsoft/CodeT5-base"
+#   size: 15Gi
+
+# Remember to also update:
+# - routing.modelName to match the model name
+# - GPU resource requirements
+# - Memory allocation (modelArtifacts.size)
