@@ -4,4 +4,25 @@ This repository contains scripts and configuration files for setting up and depl
 
 ## Overview
 
-This setup is optimized for local development environments using Minikube with Docker and NVIDIA GPU support, specifically tested on Ubuntu 24.04 with WSL2 and RTX 5070.
+This setup is tested with WSL2 and Ubuntu 24.04 with an Nvidia RTX 5070 consumer-grade card. It should also work with other CUDA-supported Nvidia accelerators. The nvidia-smi tool will confirm if your WSL can see your accelerator.
+
+1. Setup Minikube environment with Nvidia drivers
+
+    ```shell
+    chmod +x setup_dev.sh
+    ./setup_dev.sh
+    ```
+
+1. Setup observability with Prometheus/grafana stack
+
+    ```shell
+    chmod +x setup_observability.sh
+    ./setup_observability.sh
+    ```
+
+1. Setup llmd infra
+
+    ```shell
+    chmod +x setup_llmd.sh
+    ./setup_llmd.sh
+    ```
